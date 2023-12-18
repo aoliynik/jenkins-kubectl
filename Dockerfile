@@ -2,7 +2,7 @@ FROM bitnami/jenkins:2.426.2-debian-11-r0
 
 ARG KUBECTL_VERSION=1.25.16
 ARG HELM_VERSION=3.13.3
-ARG HELMFILE_VERSION=0.138.7
+ARG HELMFILE_VERSION=0.159.0
 
 USER root
 
@@ -18,17 +18,15 @@ RUN curl -LO "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" && \
     rm -rf linux-amd64 helm-v${HELM_VERSION}-linux-amd64.tar.gz
 
 # Install helm plugins
-RUN helm plugin install https://github.com/databus23/helm-diff --version v3.3.1 && \
-    helm plugin install https://github.com/jkroepke/helm-secrets --version v3.5.0 && \
-    helm plugin install https://github.com/hypnoglow/helm-s3.git --version v0.10.0 && \
-    helm plugin install https://github.com/aslafy-z/helm-git.git --version v0.10.0
-
 RUN helm plugin install https://github.com/databus23/helm-diff --version v3.8.1 && \
     helm plugin install https://github.com/jkroepke/helm-secrets --version v4.5.1 && \
     helm plugin install https://github.com/hypnoglow/helm-s3.git --version v0.15.1 && \
     helm plugin install https://github.com/aslafy-z/helm-git.git --version v0.15.1 && \
 
-ADD https://github.com/roboll/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_linux_amd64 /usr/local/bin/helmfile
-RUN chmod 0755 /usr/local/bin/helmfile
+# Install helmfile
+RUN curl -LO "https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz" && \
+    tar -zxvf helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz && \
+    mv helmfile /usr/local/bin/helmfile && \
+    rm -rf linux-amd64 helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz
 
 USER 1001
