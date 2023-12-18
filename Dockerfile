@@ -29,4 +29,10 @@ RUN curl -LO "https://github.com/helmfile/helmfile/releases/download/v${HELMFILE
     mv helmfile /usr/local/bin/helmfile && \
     rm -rf linux-amd64 helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz
 
+# Install aws-cli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  && unzip awscliv2.zip \
+  && ./aws/install \
+  && rm -rf aws awscliv2.zip
+
 USER 1001
