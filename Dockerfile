@@ -21,7 +21,7 @@ RUN curl -LO "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" && \
 RUN helm plugin install https://github.com/databus23/helm-diff --version v3.8.1 && \
     helm plugin install https://github.com/jkroepke/helm-secrets --version v4.5.1 && \
     helm plugin install https://github.com/hypnoglow/helm-s3.git --version v0.15.1 && \
-    helm plugin install https://github.com/aslafy-z/helm-git.git --version v0.15.1 && \
+    helm plugin install https://github.com/aslafy-z/helm-git.git --version v0.15.1
 
 # Install helmfile
 RUN curl -LO "https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_amd64.tar.gz" && \
